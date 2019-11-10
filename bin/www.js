@@ -5,6 +5,6 @@ const serverHandle = require('../app')
 
 const server = http.createServer(serverHandle)
 
-server.listen(PORT)
-
-console.log('启动成功')
+server.listen(PORT,'0.0.0.0',function() {
+    console.log('Web服务器开始监听8080端口')
+})
