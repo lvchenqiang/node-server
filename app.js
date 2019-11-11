@@ -1,6 +1,6 @@
 const querystring = require('querystring')
 const handleUserRouter = require('./src/router/user')
-
+const handleDingRouter = require('./src/router/game')
 // session 数据
 const SESSION_DATA = {}
 
@@ -71,6 +71,17 @@ const serverHandle = (req, res) => {
         })
        
      return
+    }
+    
+    const dingResult = handleDingRouter(req,res) 
+    if (dingResult) {
+        console.log("___________________******");
+        dingResult.then(data => {
+            res.end(
+                JSON.stringify(data)
+            )
+        })
+        return;
     }
 
 
