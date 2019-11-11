@@ -77,6 +77,7 @@ const serverHandle = (req, res) => {
     if (dingResult) {
         console.log("___________________******");
         dingResult.then(data => {
+            console.log(data);
             res.end(
                 JSON.stringify(data)
             )
