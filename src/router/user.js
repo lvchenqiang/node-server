@@ -15,7 +15,7 @@ const handleUserRouter = (req, res)=> {
     //   if(loginResult){
   
      return new Promise((resolve,reject) => {
-        resolve("hi,你好");
+        resolve("hi,你好!欢迎来到长三角");
      });
          
     //   return loginResult.then(data => {
