@@ -18,6 +18,7 @@ const serverHandle = (req, res) => {
     const url = req.url
     req.path = url.split('?')[0]
     console.log("______");
+    console.log(req);
     /// 解析query
     req.query = querystring.parse(url.split('?')[1])
     /// 解析 cookie
