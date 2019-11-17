@@ -55,23 +55,7 @@ const serverHandle = (req, res) => {
     req.session = SESSION_DATA[userId];
     getPostdata(req).then(postData => {
 
-     // 处理user路由
-     const userResult = handleUserRouter(req, res)
-     if(userResult) {
-     
-        userResult.then(data => {
-            console.log("data")
-            console.log(data)
-            // if(needSetCookie){
-            //     res.setHeader('Set-cookie',`userid=${userId}; path=/; httponly; expires=${getCookieExpires()}`)
-            // }
-            res.end(
-                JSON.stringify(data)
-            )
-        })
-       
-     return
-    }
+  
     
     const dingResult = handleDingRouter(req,res) 
     if (dingResult) {
@@ -84,6 +68,28 @@ const serverHandle = (req, res) => {
         })
         return;
     }
+
+
+       // 处理user路由
+    const userResult = handleUserRouter(req, res)
+    if(userResult) {
+    
+        userResult.then(data => {
+            console.log("data")
+            console.log(data)
+            // if(needSetCookie){
+            //     res.setHeader('Set-cookie',`userid=${userId}; path=/; httponly; expires=${getCookieExpires()}`)
+            // }
+            res.end(
+                JSON.stringify(data)
+            )
+        })
+        
+    return
+    }
+
+
+
 
 
       // 未命中路由, 返回404

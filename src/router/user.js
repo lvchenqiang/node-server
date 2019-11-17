@@ -2,13 +2,11 @@
 const {SuccessModel, ErrorModel} = require('../model/resModel')
 
 
-
-
 const handleUserRouter = (req, res)=> {
    
     const method = req.method
     console.log(method)
-    if(method === "GET" && req.path === '/api/user'){
+    if(method === "GET"){
     //   const {username, password} = req.body
     //   const loginResult = LoginClick(username,password)
 
