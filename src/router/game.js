@@ -9,32 +9,12 @@ const datas = ["莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻�
 
 
 
-var url="https://oapi.dingtalk.com/robot/send?access_token=96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc";
-
-var requestData = function (content) {
-    return {  
-        msgtype: "text",  
-        text:{"content":"摇一摇\n" + datas[Math.round((Math.random()*3))] + content},
-        time: new Date().getTime(),
-        access_token: "96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc",
-        at: {
-            "atMobiles":[
-                "15981813065"
-            ],
-            "isAtAll":false
-        }
-    }
-};//这是需要提交的数据
-
-
 const handleDingRouter = (req, res) => {
    if(req.path == '/api/game') {
 
-     console.log("/api/game")
+     console.log(req.query);
      
-     req.query
-
-     httprequest(url,requestData());
+     httprequest(datas[Math.round((Math.random()*3))]);
 
     console.log("请求结束");
 
