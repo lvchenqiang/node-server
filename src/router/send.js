@@ -1,6 +1,7 @@
 var request = require('request');
 
 const schedule = require('node-schedule');
+const {getFullTime} = require('../utils/utils')
 
 var url="https://oapi.dingtalk.com/robot/send?access_token=96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc";
 
@@ -37,8 +38,10 @@ function httprequest(content){
 };
 
 const  scheduleCronstyle = ()=>{
+    console.log("________*****定时器加载****______");
   //每分钟的第30秒定时执行一次:
-    schedule.scheduleJob('30 1 * * * *',()=>{
+    schedule.scheduleJob('30 * * * * *',()=>{
+        console.log("________*****定时器执行****______"+getFullTime());
         httprequest("早上好");
     }); 
 }

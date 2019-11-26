@@ -1,6 +1,7 @@
 const querystring = require('querystring')
 const handleUserRouter = require('./src/router/user')
 const handleDingRouter = require('./src/router/game')
+const {getFullTime} = require('./src/utils/utils')
 // session 数据
 const SESSION_DATA = {}
 
@@ -12,15 +13,37 @@ const getCookieExpires = () => {
 }
 
 
+/*
+时间格式化
+*/
+  Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
+
+
 const serverHandle = (req, res) => {
     // 设置返回格式 JSON
     res.setHeader('Content-type','application/json')
     const url = req.url
     req.path = url.split('?')[0]
-    console.log("______");
-    console.log(req);
+    console.log("___************query****************___");
     /// 解析query
     req.query = querystring.parse(url.split('?')[1])
+    console.log(req.query);
+    console.log(getFullTime())
+    console.log("___************query****************___");
     /// 解析 cookie
     const cookieStr = req.headers.cookie || ''
     req.cookie = {}
@@ -32,11 +55,7 @@ const serverHandle = (req, res) => {
       
         const key = item.split('=')[0].trim()
         const value = item.split('=')[1].trim()
-
-
         req.cookie[key] = value
-
-
     });
 
 
@@ -60,24 +79,18 @@ const serverHandle = (req, res) => {
     
     const dingResult = handleDingRouter(req,res) 
     if (dingResult) {
-        console.log("___________________******");
         dingResult.then(data => {
-            console.log(data);
             res.end(
                 JSON.stringify(data)
             )
         })
         return;
     }
-
-
        // 处理user路由
     const userResult = handleUserRouter(req, res)
     if(userResult) {
     
         userResult.then(data => {
-            console.log("data")
-            console.log(data)
             // if(needSetCookie){
             //     res.setHeader('Set-cookie',`userid=${userId}; path=/; httponly; expires=${getCookieExpires()}`)
             // }
@@ -142,6 +155,7 @@ const getPostdata = (req) => {
 
 
 module.exports = serverHandle;
+
 
 
 
