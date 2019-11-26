@@ -39,9 +39,10 @@ const handleDingRouter = (req, res) => {
         var dataObject = querystring.parse(data);
         console.log(dataObject);
 
-        httprequest("你好,美丽的姑娘");
-
     })
+
+    httprequest("你好,美丽的姑娘");
+
 
      } else {
         httprequest(datas[Math.round((Math.random()*3))]);
