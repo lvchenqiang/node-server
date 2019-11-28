@@ -1,6 +1,7 @@
 const querystring = require('querystring')
 const handleUserRouter = require('./src/router/user')
-const handleDingRouter = require('./src/router/game')
+const handleGameRouter = require('./src/router/game')
+const handleDingRouter = require('./src/router/ding')
 const {getFullTime} = require('./src/utils/utils')
 // session 数据
 const SESSION_DATA = {}
@@ -86,6 +87,18 @@ const serverHandle = (req, res) => {
         })
         return;
     }
+
+    const gameResult = handleGameRouter(req,res) 
+    if (gameResult) {
+        gameResult.then(data => {
+            res.end(
+                JSON.stringify(data)
+            )
+        })
+        return;
+    }
+
+
        // 处理user路由
     const userResult = handleUserRouter(req, res)
     if(userResult) {

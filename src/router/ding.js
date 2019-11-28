@@ -7,9 +7,13 @@ const datas = ["莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻�
 "十年生死两茫茫，不思量，自难忘。千里孤坟，无处话凄凉。纵使相逢应不识，尘满面，鬓如霜。\n 夜来幽梦忽还乡，小轩窗，正梳妆。相顾无言，惟有泪千行。料得年年肠断处，明月夜，短松冈。","美女妖且闲,\n采桑岐路间。\n柔条纷冉冉,\n落叶何翩翩。\n"]
 
 
-// httprequest(datas[Math.round((Math.random()*3))]);
-const handleGameRouter = (req, res) => {
-   if(req.path == '/api/game') {
+
+const handleDingRouter = (req, res) => {
+   if(req.path == '/api/ding') {
+
+
+    console.log(req);
+    console.log(res);
 
      if(req.method == "POST") {
 
@@ -28,21 +32,21 @@ const handleGameRouter = (req, res) => {
 
         //（1）.对url进行解码（url会对中文进行编码）
         data = decodeURI(data);
-        console.log('__________**********__________');
-        console.log(data);
 
         /**post请求参数不能使用url模块解析，因为他不是一个url，而是一个请求体对象 */
 
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
+        console.log('__________****POST******__________');
         var dataObject = querystring.parse(data);
         console.log(dataObject);
 
     })
 
 
+
      } else {
-       
+        
         return new Promise((resolve, reject) => {
            resolve(datas[Math.round((Math.random()*3))]);
         });
@@ -53,4 +57,4 @@ const handleGameRouter = (req, res) => {
 
 }
 
-module.exports = handleGameRouter
+module.exports = handleDingRouter
