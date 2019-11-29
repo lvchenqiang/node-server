@@ -1,6 +1,6 @@
 const {SuccessModel, ErrorModel} = require('../model/resModel')
 const httprequest = require('./send')
-
+const querystring = require('querystring')
 
 
 const datas = ["莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。\n 料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。","伤情最是晚凉天，憔悴斯人不堪怜。\n 邀酒摧肠三杯醉，寻香惊梦五更寒。 \n 钗头凤斜卿有泪，荼蘼花了我无缘。\n 小楼寂寞新雨月，也难如钩也难圆。 ", 
@@ -11,25 +11,18 @@ const datas = ["莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻�
 const handleDingRouter = (req, res) => {
    if(req.path == '/api/ding') {
 
-
-    console.log(req);
-    console.log(res);
-
      if(req.method == "POST") {
-
-         //创建空字符叠加数据片段
-    var data = '';
+      var data = "";
 
     //2.注册data事件接收数据（每当收到一段表单提交的数据，该方法会执行一次）
-    req.on('data', function (chunk) {
-        // chunk 默认是一个二进制数据，和 data 拼接会自动 toString
-        data += chunk;
+    req.on('data',  chunk => {
+        data += chunk.toString();
     });
 
     // 3.当接收表单提交的数据完毕之后，就可以进一步处理了
     //注册end事件，所有数据接收完成会执行一次该方法
-    req.on('end', function () {
-
+    req.on('end',  () => {
+      console.log('data');
         //（1）.对url进行解码（url会对中文进行编码）
         data = decodeURI(data);
 
@@ -41,9 +34,13 @@ const handleDingRouter = (req, res) => {
         var dataObject = querystring.parse(data);
         console.log(dataObject);
 
+        res.end(
+         JSON.stringify(datas[Math.round((Math.random()*3))])
+     )
+
     })
 
-
+ 
 
      } else {
         

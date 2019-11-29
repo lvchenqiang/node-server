@@ -74,8 +74,6 @@ const serverHandle = (req, res) => {
         userId = `${Date.now()}_${Math.random()}`
     }
     req.session = SESSION_DATA[userId];
-    getPostdata(req).then(postData => {
-
   
     
     const dingResult = handleDingRouter(req,res) 
@@ -119,52 +117,14 @@ const serverHandle = (req, res) => {
 
 
 
-      // 未命中路由, 返回404
-      res.writeHead(404,{"Content-type":"text/plain"})
-      res.write("404 Not Found\n")
+    //   // 未命中路由, 返回404
+    //   res.writeHead(404,{"Content-type":"text/plain"})
+    //   res.write("404 Not Found\n")
 
 
 
     }
 
-
-
-
-
-    )
-
-
-
-
-
-}
-
-
-const getPostdata = (req) => {
-    return new Promise((resolve,reject)=> {
-        //   if(req.method !== "POST" || req.headers['Content-type'] != 'application/json') {
-        //       resolve({})
-        //       return
-        //   }
-        
-          let postData = ''
-          req.on('data', chunk => {
-              postData += chunk.toString()
-          })
-
-
-          req.on('end', ()=>{
-              if(!postData){
-                resolve({})
-                return  
-              }
-
-              resolve(JSON.stringify(postData))
-          })
-
-    })
-
-}
 
 
 module.exports = serverHandle;
