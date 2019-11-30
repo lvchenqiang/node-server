@@ -31,15 +31,19 @@ const handleDingRouter = (req, res) => {
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
         console.log('__________****POST******__________');
-        let dataObject = JSON.parse(querystring.parse(data));
-        console.log(dataObject);
-        console.log(dataObject.text);
-        console.log(dataObject.text.content);
-        if(dataObject && dataObject.text && dataObject.text.content){
+        let dataObject = querystring.parse(data);
+        let params_str = Object.getOwnPropertyNames(dataObject)[0];
+        let params = JSON.parse(params_str);
+      //   console.log(dataObject);
+      //   console.log(typeof(params));
+      //   console.log(Object.getOwnPropertyNames(params))
+      //   console.log(dataObject['text']);
+      // //   console.log(JSON.parse(dataObject.toString))
+        if(params && params.text && params.text.content){
          console.log('__________****数据处理******__________');
            var content = dataObject.text.content.toString();
           
-           if(content.indexof('你好') != -1) {
+           if(content.indexof('你好') != -1 || content.indexof('nihao') != -1 || content.indexof('hi') != -1) {
                if(dataObject.senderNick.indexOf('吕陈强') != -1) {
                   httprequest('你好, 吕陈强先生');
                } else {
