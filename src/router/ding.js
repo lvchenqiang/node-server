@@ -7,7 +7,7 @@ const datas = ["莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻�
 "十年生死两茫茫，不思量，自难忘。千里孤坟，无处话凄凉。纵使相逢应不识，尘满面，鬓如霜。\n 夜来幽梦忽还乡，小轩窗，正梳妆。相顾无言，惟有泪千行。料得年年肠断处，明月夜，短松冈。","美女妖且闲,\n采桑岐路间。\n柔条纷冉冉,\n落叶何翩翩。\n"]
 
 
-
+const hellos = ['你好,美丽的姑娘','你好,可爱的小仙女','你好,漂亮的小姐姐',]
 const handleDingRouter = (req, res) => {
    if(req.path == '/api/ding') {
 
@@ -31,9 +31,50 @@ const handleDingRouter = (req, res) => {
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
         console.log('__________****POST******__________');
-        var dataObject = querystring.parse(data);
-        console.log(dataObject);
+        let dataObject = querystring.parse(data);
+        
+        if(dataObject && dataObject.text && dataObject.text.content){
+           var content = dataObject.text.content.toString();
+          
+           if(content.indexof('你好') != -1) {
+               if(dataObject.senderNick.indexOf('吕陈强') != -1) {
+                  httprequest('你好, 吕陈强先生');
+               } else {
+                 var index = Math.round((Math.random()*3))
+                 httprequest(hellos[index])
+               } 
+           } else {
+            httprequest(content);
+           }
 
+        } else {
+         
+        }
+       
+
+        /*
+        {
+    "conversationId": "cidhkqurfbk0dqnDOo2xi9nRg': '=",
+    "atUsers": [{
+        "dingtalkId": "$:LWCP_v1:$23eomCGGluovI4aQ7jiNnLld5GQTl9u/"
+    }],
+    "chatbotUserId": "$:LWCP_v1:$23eomCGGluovI4aQ7jiNnLld5GQTl9u/",
+    "msgId": "msgkVT1OieeH68vK0evIJ1ryQ==",
+    "senderNick": "吕陈强",
+    "isAdmin": false,
+    "sessionWebhookExpiredTime": 1575052190245,
+    "createAt": 1575046790190,
+    "conversationType": "2",
+    "senderId": "$:LWCP_v1:$kG35VjzO660fDl/snf KIg==",
+    "conversationTitle": "HI",
+    "isInAtList": true,
+    "sessionWebhook": "https://oapi.dingtalk.com/robot/sendBySession?session=5ec80d68f6923eafe1688bc914cc53d1",
+    "text": {
+        "content": "  nihao"
+    },
+    "msgtype": "text"
+    }
+        */
         res.end(
          JSON.stringify(datas[Math.round((Math.random()*3))])
      )
