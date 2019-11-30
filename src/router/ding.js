@@ -34,11 +34,11 @@ const handleDingRouter = (req, res) => {
         let dataObject = querystring.parse(data);
         let params_str = Object.getOwnPropertyNames(dataObject)[0];
         let params = JSON.parse(params_str);
-      //   console.log(dataObject);
-      //   console.log(typeof(params));
-      //   console.log(Object.getOwnPropertyNames(params))
-      //   console.log(dataObject['text']);
-      // //   console.log(JSON.parse(dataObject.toString))
+        console.log(dataObject);
+        console.log(typeof(params));
+        console.log(Object.getOwnPropertyNames(params))
+        console.log(dataObject['text']);
+      //   console.log(JSON.parse(dataObject.toString))
         if(params && params.text && params.text.content){
          console.log('__________****数据处理******__________');
            var content = dataObject.text.content.toString();
