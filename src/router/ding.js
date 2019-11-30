@@ -32,7 +32,9 @@ const handleDingRouter = (req, res) => {
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
         let dataObject = querystring.parse(data);
         console.log(dataObject);
+        console.log(typeof(dataObject));
         console.log(Object.getOwnPropertyNames(dataObject))
+
         let params_str = Object.getOwnPropertyNames(dataObject)[0];
         let params = JSON.parse(params_str);
         console.log(typeof(params));
