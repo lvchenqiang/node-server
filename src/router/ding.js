@@ -34,16 +34,13 @@ const handleDingRouter = (req, res) => {
         let dataObject = querystring.parse(data);
         let params_str = Object.getOwnPropertyNames(dataObject)[0];
         let params = JSON.parse(params_str);
-        console.log(dataObject);
-        console.log(typeof(params));
-        console.log(Object.getOwnPropertyNames(params))
-        console.log(dataObject['text']);
-      //   console.log(JSON.parse(dataObject.toString))
+      //   console.log(dataObject);
+      //   console.log(typeof(params));
+      //   console.log(Object.getOwnPropertyNames(params))
         if(params && params.text && params.text.content){
          console.log('__________****数据处理******__________');
-           var content = dataObject.text.content.toString();
-          
-           if(content.indexof('你好') != -1 || content.indexof('nihao') != -1 || content.indexof('hi') != -1) {
+           var content = params.text.content.toString();
+           if(content.indexOf('你好') != -1 || content.indexOf('nihao') != -1 || content.indexOf('hi') != -1) {
                if(dataObject.senderNick.indexOf('吕陈强') != -1) {
                   httprequest('你好, 吕陈强先生');
                } else {
@@ -57,31 +54,6 @@ const handleDingRouter = (req, res) => {
         } else {
          
         }
-       
-
-        /*
-        {
-    "conversationId": "cidhkqurfbk0dqnDOo2xi9nRg': '=",
-    "atUsers": [{
-        "dingtalkId": "$:LWCP_v1:$23eomCGGluovI4aQ7jiNnLld5GQTl9u/"
-    }],
-    "chatbotUserId": "$:LWCP_v1:$23eomCGGluovI4aQ7jiNnLld5GQTl9u/",
-    "msgId": "msgkVT1OieeH68vK0evIJ1ryQ==",
-    "senderNick": "吕陈强",
-    "isAdmin": false,
-    "sessionWebhookExpiredTime": 1575052190245,
-    "createAt": 1575046790190,
-    "conversationType": "2",
-    "senderId": "$:LWCP_v1:$kG35VjzO660fDl/snf KIg==",
-    "conversationTitle": "HI",
-    "isInAtList": true,
-    "sessionWebhook": "https://oapi.dingtalk.com/robot/sendBySession?session=5ec80d68f6923eafe1688bc914cc53d1",
-    "text": {
-        "content": "  nihao"
-    },
-    "msgtype": "text"
-    }
-        */
         res.end(
          JSON.stringify(datas[Math.round((Math.random()*3))])
      )
