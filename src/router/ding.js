@@ -23,7 +23,6 @@ const handleDingRouter = (req, res) => {
     // 3.当接收表单提交的数据完毕之后，就可以进一步处理了
     //注册end事件，所有数据接收完成会执行一次该方法
     req.on('end',  () => {
-      console.log('data');
         //（1）.对url进行解码（url会对中文进行编码）
         data = decodeURI(data);
 
@@ -32,11 +31,12 @@ const handleDingRouter = (req, res) => {
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
         let dataObject = querystring.parse(data);
+        console.log(dataObject);
+        console.log(Object.getOwnPropertyNames(dataObject))
         let params_str = Object.getOwnPropertyNames(dataObject)[0];
         let params = JSON.parse(params_str);
-      //   console.log(dataObject);
-      //   console.log(typeof(params));
-      //   console.log(Object.getOwnPropertyNames(params))
+        console.log(typeof(params));
+        console.log(Object.getOwnPropertyNames(params))
         if(params && params.text && params.text.content){
          
            var content = params.text.content.toString();
