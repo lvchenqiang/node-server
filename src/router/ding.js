@@ -33,6 +33,8 @@ const handleDingRouter = (req, res) => {
         console.log('__________****POST******__________');
         let dataObject = querystring.parse(data);
         console.log(dataObject);
+        console.log(dataObject.text);
+        console.log(dataObject.text.content);
         if(dataObject && dataObject.text && dataObject.text.content){
          console.log('__________****数据处理******__________');
            var content = dataObject.text.content.toString();
