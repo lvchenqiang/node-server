@@ -5,7 +5,7 @@ const {getFullTime} = require('../utils/utils')
 
 var url="https://oapi.dingtalk.com/robot/send?access_token=96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc";
 
-function httprequest(content){
+function httprequest(content, name){
     request({
         url: url,
         method: "POST",
@@ -13,7 +13,7 @@ function httprequest(content){
         headers: {
             "content-type": "application/json",
         },
-        body: requestData(content)
+        body: requestData(content,name)
     }, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body) // 请求成功的处理逻辑
@@ -22,15 +22,20 @@ function httprequest(content){
 };
 
 
- function requestData(content) {
+ function requestData(content,name) {
+   var names = name || ''
+   var mobile =  '13221063706';
+   if(names.length >= 0) {
+    mobile = '15658837983'
+   }
     return {  
         msgtype: "text",  
-        text:{"content":content+'@13221063706'},
+        text:{"content":content+'@'+mobile},
         time: new Date().getTime(),
         access_token: "96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc",
         at: {
             "atMobiles":[
-                "13221063706"
+                mobile
             ],
             "isAtAll":false
         }

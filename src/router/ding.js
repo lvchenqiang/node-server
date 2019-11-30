@@ -1,4 +1,5 @@
-const {SuccessModel, ErrorModel} = require('../model/resModel')
+const womandata = require('../config/woman.json')
+const mandata = require('../config/man.json')
 const httprequest = require('./send')
 const querystring = require('querystring')
 
@@ -7,7 +8,7 @@ const datas = ["莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻�
 "十年生死两茫茫，不思量，自难忘。千里孤坟，无处话凄凉。纵使相逢应不识，尘满面，鬓如霜。\n 夜来幽梦忽还乡，小轩窗，正梳妆。相顾无言，惟有泪千行。料得年年肠断处，明月夜，短松冈。","美女妖且闲,\n采桑岐路间。\n柔条纷冉冉,\n落叶何翩翩。\n"]
 
 
-const hellos = ['你好,美丽的姑娘','你好,可爱的小仙女','你好,漂亮的小姐姐',]
+const hellos = ['你好,美丽的姑娘','你好,可爱的小仙女','你好,漂亮的小姐姐','你好,老婆大人']
 const handleDingRouter = (req, res) => {
    if(req.path == '/api/ding') {
 
@@ -30,29 +31,41 @@ const handleDingRouter = (req, res) => {
 
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
-        console.log('__________****POST******__________');
         let dataObject = querystring.parse(data);
         let params_str = Object.getOwnPropertyNames(dataObject)[0];
         let params = JSON.parse(params_str);
-        console.log(dataObject);
-        console.log(typeof(params));
-        console.log(Object.getOwnPropertyNames(params))
+      //   console.log(dataObject);
+      //   console.log(typeof(params));
+      //   console.log(Object.getOwnPropertyNames(params))
         if(params && params.text && params.text.content){
-         console.log('__________****数据处理******__________');
-           var content = params.text.content.toString();
-           if(content.indexOf('你好') != -1 || content.indexOf('nihao') != -1 || content.indexOf('hi') != -1) {
-               if(dataObject.senderNick.indexOf('吕陈强') != -1) {
-                  httprequest('你好, 吕陈强先生');
-               } else {
-                 var index = Math.round((Math.random()*3))
-                 httprequest(hellos[index])
-               } 
-           } else {
-            httprequest(content);
-           }
-
-        } else {
          
+           var content = params.text.content.toString();
+           if(isHello(content)) {
+
+               if(params.senderNick && params.senderNick.indexOf('吕陈强') != -1) {
+                  httprequest('你好, 吕陈强先生','lv');
+               } else {
+                  var index = Math.round((Math.random()*3))
+                  var msg = hellos[index]
+                 httprequest(msg)
+               } 
+
+           } else if(isGood(content)){
+             if(params.senderNick &&  params.senderNick.indexOf('吕陈强') != -1) {
+               var index = Math.round((Math.random()*mandata.length))
+               var msg = mandata[index]
+               httprequest(msg,'lv')
+             } else {
+               var index = Math.round((Math.random()*womandata.length))
+               var msg = womandata[index]
+               httprequest(msg)
+             }
+            
+           }else {
+              httprequest(content);
+           }
+        } else {
+         console.log('———————————————空空空———————————————');
         }
         res.end(
          JSON.stringify(datas[Math.round((Math.random()*3))])
@@ -74,4 +87,13 @@ const handleDingRouter = (req, res) => {
 
 }
 
+
+
+function isHello(content) {
+   return  (content.indexOf('你好') != -1 || content.indexOf('nihao') != -1 || content.indexOf('hi') != -1)
+}
+
+function isGood(content) {
+return (content.indexOf('夸我')!=-1 || content.indexOf('赞我')!=-1 || content.indexOf('赞美我')!=-1);
+}
 module.exports = handleDingRouter
