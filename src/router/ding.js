@@ -31,7 +31,7 @@ const handleDingRouter = (req, res) => {
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
         console.log('__________****POST******__________');
-        let dataObject = querystring.parse(data);
+        let dataObject = JSON.parse(querystring.parse(data));
         console.log(dataObject);
         console.log(dataObject.text);
         console.log(dataObject.text.content);
