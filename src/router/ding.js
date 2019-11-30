@@ -19,7 +19,6 @@ const handleDingRouter = (req, res) => {
     req.on('data',  chunk => {
       
         data += chunk;
-        confirm.log();
     });
 
     // 3.当接收表单提交的数据完毕之后，就可以进一步处理了
@@ -33,18 +32,16 @@ const handleDingRouter = (req, res) => {
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
         console.log(data);
-        console.log(data);
         console.log(typeof(data));
-        console.log(Object.getOwnPropertyNames(data))
-        let dataObject = querystring.parse(data);
-        console.log(dataObject);
-        console.log(typeof(dataObject));
-        console.log(Object.getOwnPropertyNames(dataObject))
-        console.log('**************______________****************');
-        let params_str = Object.getOwnPropertyNames(dataObject)[0];
-        let params = JSON.parse(params_str);
+
+        let params = JSON.parse(data)
+        console.log('******************************');
+      //   let dataObject = querystring.parse(data);
+        console.log(params);
         console.log(typeof(params));
         console.log(Object.getOwnPropertyNames(params))
+        console.log('**************______________****************');
+       
         if(params && params.text && params.text.content){
          
            var content = params.text.content.toString();
