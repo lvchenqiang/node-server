@@ -34,7 +34,7 @@ const handleDingRouter = (req, res) => {
         console.log(dataObject);
         console.log(typeof(dataObject));
         console.log(Object.getOwnPropertyNames(dataObject))
-
+        console.log('**************______________****************');
         let params_str = Object.getOwnPropertyNames(dataObject)[0];
         let params = JSON.parse(params_str);
         console.log(typeof(params));
