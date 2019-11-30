@@ -17,7 +17,9 @@ const handleDingRouter = (req, res) => {
 
     //2.注册data事件接收数据（每当收到一段表单提交的数据，该方法会执行一次）
     req.on('data',  chunk => {
-        data += chunk.toString();
+      
+        data += chunk;
+        confirm.log();
     });
 
     // 3.当接收表单提交的数据完毕之后，就可以进一步处理了
@@ -30,6 +32,10 @@ const handleDingRouter = (req, res) => {
 
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
+        console.log(data);
+        console.log(data);
+        console.log(typeof(data));
+        console.log(Object.getOwnPropertyNames(data))
         let dataObject = querystring.parse(data);
         console.log(dataObject);
         console.log(typeof(dataObject));
