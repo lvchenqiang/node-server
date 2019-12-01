@@ -25,7 +25,7 @@ function httprequest(content, name){
  function requestData(content,name) {
    var names = name || ''
    var mobile =  '13221063706';
-   if(names.length >= 0) {
+   if(names.length > 1) {
     mobile = '15658837983'
    }
     return {  
