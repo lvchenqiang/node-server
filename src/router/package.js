@@ -33,13 +33,12 @@ const handlePackageRouter = (req,res) => {
 
         //（2）.使用querystring对url进行反序列化（解析url将&和=拆分成键值对），得到一个对象
         //querystring是nodejs内置的一个专用于处理url的模块，API只有四个，详情见nodejs官方文档
-        var dataObject = querystring.parse(data);
-        console.log(dataObject);
-        httprequest(dataObject,'lv');
+        // var dataObject = querystring.parse(data);
+        // console.log(dataObject);
+        httprequest(data.toString(),'lv');
         
-        return new Promise((resolve, reject) => {
-            resolve(datas[Math.round((Math.random()*3))]);
-         });
+         res.end(
+         JSON.stringify(datas[Math.round((Math.random()*3))]));
     })
      } else {
         console.log('__________****打包触发操作******__________');
