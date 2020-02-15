@@ -45,7 +45,7 @@ function httprequest(content, name){
 const  scheduleCronstyle = ()=>{
     console.log("________*****定时器加载****______");
   //每分钟的第30秒定时执行一次:
-    schedule.scheduleJob('30 1 8 * * *',()=>{
+    schedule.scheduleJob('30 30 7 * * *',()=>{
         console.log("________*****定时器执行****______"+getFullTime());
         httprequest("早上好,老婆大人！");
     }); 

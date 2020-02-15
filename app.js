@@ -2,6 +2,7 @@ const querystring = require('querystring')
 const handleUserRouter = require('./src/router/user')
 const handleGameRouter = require('./src/router/game')
 const handleDingRouter = require('./src/router/ding')
+const handlePackageRouter = require('./src/router/package')
 const {getFullTime} = require('./src/utils/utils')
 // session 数据
 const SESSION_DATA = {}
@@ -76,6 +77,23 @@ const serverHandle = (req, res) => {
     req.session = SESSION_DATA[userId];
   
     
+    const packageResult = handlePackageRouter(req,res) ;
+    console.log("==========走到这里1");
+    if(packageResult) {
+        packageResult.then(data => {
+            // if(needSetCookie){
+            //     res.setHeader('Set-cookie',`userid=${userId}; path=/; httponly; expires=${getCookieExpires()}`)
+            // }
+            res.end(
+                JSON.stringify(data)
+            )
+        })
+
+        return
+    }
+
+
+
     const dingResult = handleDingRouter(req,res) 
     if (dingResult) {
         dingResult.then(data => {
@@ -113,6 +131,8 @@ const serverHandle = (req, res) => {
     return
     }
 
+
+   
 
 
 
