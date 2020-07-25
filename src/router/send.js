@@ -7,6 +7,7 @@ const dayloves = require('../config/daylove.json')
 var cacheTime = []
 var url="https://oapi.dingtalk.com/robot/send?access_token=96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc";
 
+var englisgurl = "http://open.iciba.com/dsapi/";
 function httprequest(content, name){
     request({
         url: url,
@@ -75,6 +76,26 @@ scheduleCronstyle('30 30 22 * * *',()=>{
     console.log(cacheTime);
 });
 
+
+scheduleCronstyle('30 33 11 * * *',()=>{
+    console.log("每日一句情话"); // 请
+    request({
+        url: englisgurl,
+        method: "POST",
+        json: true,
+        headers: {
+            "content-type": "application/json",
+        },
+        body: {}
+    }, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body); // 请求成功的处理逻辑
+           var markdowm = `#### 每日一句 \n>  ${body.content} \n> ![screenshot](${body.fenxiang_img}) \n   ###### ${body.dateline} [听](${body.tts})`
+           httprequest(markdowm,'lvchenqiang');
+        }
+    });
+
+});
 
 
 module.exports = httprequest;
