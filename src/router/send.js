@@ -3,6 +3,8 @@ var request = require('request');
 const schedule = require('node-schedule');
 const {getFullTime} = require('../utils/utils')
 
+const dayloves = require('../config/daylove.json')
+var cacheTime = []
 var url="https://oapi.dingtalk.com/robot/send?access_token=96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc";
 
 function httprequest(content, name){
@@ -29,8 +31,8 @@ function httprequest(content, name){
     mobile = '15658837983'
    }
     return {  
-        msgtype: "text",  
-        text:{"content":content+'@'+mobile},
+        msgtype: "markdown",  
+        markdown:{"text":content+'@'+mobile,"title":"[红包来了]"},
         time: new Date().getTime(),
         access_token: "96db2e7f99edd0abbe84f7be6a716e6fe6ad1f2de038be544f110ad150c3bebc",
         at: {
@@ -42,16 +44,38 @@ function httprequest(content, name){
     }
 };
 
-const  scheduleCronstyle = ()=>{
+
+function scheduleCronstyle(time,callback) {
     console.log("________*****定时器加载****______");
-  //每分钟的第30秒定时执行一次:
-    schedule.scheduleJob('30 30 7 * * *',()=>{
+    schedule.scheduleJob(time,()=>{
         console.log("________*****定时器执行****______"+getFullTime());
-        httprequest("早上好,老婆大人！");
+        callback();
     }); 
 }
 
-scheduleCronstyle();
+
+function getIndex() {
+  var tmp = Math.round((Math.random()*dayloves.length-1))
+  if (cacheTime.indexOf(tmp)) {
+    getIndex();
+  }
+
+  return tmp;
+}
+
+ //7点30分30秒定时执行一次:
+scheduleCronstyle('30 30 7 * * *',()=>{
+    httprequest("早上好,老婆大人！");
+});
+
+
+/// 22点30分30秒
+scheduleCronstyle('30 30 22 * * *',()=>{
+    httprequest("晚安,老婆大人!"+ dayloves[getIndex()]);
+    console.log(cacheTime);
+});
+
+
 
 module.exports = httprequest;
 
