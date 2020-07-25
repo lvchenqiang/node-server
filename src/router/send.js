@@ -77,7 +77,7 @@ scheduleCronstyle('30 30 22 * * *',()=>{
 });
 
 
-scheduleCronstyle('30 33 11 * * *',()=>{
+scheduleCronstyle('00 30 9 * * *',()=>{
     console.log("每日一句情话"); // 请
     request({
         url: englisgurl,
