@@ -57,10 +57,11 @@ function scheduleCronstyle(time,callback) {
 
 function getIndex() {
   var tmp = Math.round((Math.random()*dayloves.length-1))
-  if (cacheTime.indexOf(tmp)) {
+  if (cacheTime.indexOf(tmp) != -1) {
     getIndex();
+    return;
   }
-
+  cacheTime.push(tmp);
   return tmp;
 }
 
@@ -97,7 +98,7 @@ scheduleCronstyle('00 30 9 * * *',()=>{
 
 });
 
-
+console.log(getIndex());
 module.exports = httprequest;
 
 
